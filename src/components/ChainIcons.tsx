@@ -60,7 +60,7 @@ const ChainIcons = () => {
           <div className="glass-card rounded-2xl p-5 cursor-pointer transition-all border border-black/5 hover:border-secondary/30 hover:shadow-lg hover:shadow-secondary/10 w-28 h-28 flex flex-col items-center justify-center gap-3">
             <Sparkles className="w-10 h-10 text-secondary" />
             <span className="text-xs font-semibold text-center leading-tight group-hover:text-secondary transition-colors">
-              44+ more
+              45+ more
             </span>
           </div>
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-secondary/0 to-primary/0 group-hover:from-secondary/10 group-hover:to-primary/10 transition-all duration-300 -z-10 blur-xl" />

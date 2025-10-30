@@ -66,8 +66,12 @@ export const LIFI_CHAINS = [
   { key: "sol", name: "Solana", coin: "SOL", id: 1151111081099710, logoURI: "https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/solana.svg" },
 ];
 
-// Featured chains for hero display
-export const FEATURED_CHAINS = LIFI_CHAINS.slice(0, 12);
+// Featured chains for hero display 
+export const FEATURED_CHAINS = [
+  ...LIFI_CHAINS.slice(0, 1),  // Ethereum
+  LIFI_CHAINS[LIFI_CHAINS.length - 1], // Solana (last in array)
+  ...LIFI_CHAINS.slice(2, 12),  // Rest of the featured chains
+];
 
 export const POPULAR_TOKENS = [
   { symbol: 'ETH', name: 'Ethereum', address: '0x0000000000000000000000000000000000000000' },
@@ -75,3 +79,13 @@ export const POPULAR_TOKENS = [
   { symbol: 'USDT', name: 'Tether', address: '0xdac17f958d2ee523a2206206994597c13d831ec7' },
   { symbol: 'WBTC', name: 'Wrapped Bitcoin', address: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599' },
 ];
+
+// Native token addresses for different chain types
+export const NATIVE_TOKEN_ADDRESS = {
+  EVM: '0x0000000000000000000000000000000000000000',
+  SOLANA: '11111111111111111111111111111111', // Native SOL
+  WRAPPED_SOLANA: 'So11111111111111111111111111111111111111112', // wSOL
+};
+
+// Solana chain ID
+export const SOLANA_CHAIN_ID = 1151111081099710;

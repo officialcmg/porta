@@ -1,9 +1,28 @@
-import { createConfig, getQuote, ChainId, executeRoute, getTokens, Token } from '@lifi/sdk';
+import { createConfig, getQuote, ChainId, executeRoute, getTokens, Token, EVM } from '@lifi/sdk';
 
 // Initialize Li.Fi SDK
 export const initializeLiFi = () => {
+  const apiKey = import.meta.env.VITE_LIFI_API_KEY;
+  
   createConfig({
     integrator: 'porta-app',
+    apiKey: apiKey && apiKey !== 'your_api_key_here' ? apiKey : undefined,
+  });
+};
+
+// Configure EVM provider for execution
+export const configureEVMProvider = (getWalletClientFn: any, switchChainFn: any) => {
+  const apiKey = import.meta.env.VITE_LIFI_API_KEY;
+  
+  createConfig({
+    integrator: 'porta-app',
+    apiKey: apiKey && apiKey !== 'your_api_key_here' ? apiKey : undefined,
+    providers: [
+      EVM({
+        getWalletClient: getWalletClientFn,
+        switchChain: switchChainFn,
+      }),
+    ],
   });
 };
 
@@ -19,6 +38,10 @@ export interface TransferParams {
 
 export const getLiFiQuote = async (params: TransferParams) => {
   try {
+    // Use higher slippage for cross-chain swaps (different tokens)
+    // 0.01 = 1% slippage to handle price volatility during cross-chain execution
+    const slippage = 0.01;
+    
     const quote = await getQuote({
       fromAddress: params.fromAddress,
       toAddress: params.toAddress,
@@ -27,7 +50,8 @@ export const getLiFiQuote = async (params: TransferParams) => {
       fromToken: params.fromToken,
       toToken: params.toToken,
       fromAmount: params.fromAmount,
-      order: 'FASTEST',
+      slippage: slippage,
+      order: 'CHEAPEST', // Use cheapest route to minimize fees
     });
     
     return quote;
@@ -37,9 +61,11 @@ export const getLiFiQuote = async (params: TransferParams) => {
   }
 };
 
-export const executeLiFiTransfer = async (route: any) => {
+export const executeLiFiTransfer = async (route: any, updateRouteHook?: (route: any) => void) => {
   try {
-    const result = await executeRoute(route);
+    const result = await executeRoute(route, {
+      updateRouteHook: updateRouteHook || (() => {}),
+    });
     return result;
   } catch (error) {
     console.error('Error executing Li.Fi transfer:', error);
