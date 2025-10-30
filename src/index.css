@@ -64,18 +64,12 @@
       radial-gradient(ellipse 80% 50% at 50% 100%, hsl(217 91% 95% / 0.5), transparent),
       hsl(0 0% 100%);
     background-attachment: fixed;
-    zoom: 1; /* Prevent any CSS zoom scaling */
-    transform: scale(1); /* Lock transform scale */
+    zoom: 0.8; /* Scale entire app to 80% - matches browser zoom at 80% */
   }
 
-  /* Smooth scrolling and prevent auto text size adjustment */
+  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
-    font-size: 16px; /* Lock base font size */
-    -webkit-text-size-adjust: 100%; /* Prevent iOS Safari auto-zoom */
-    -moz-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    text-size-adjust: 100%;
   }
 
   /* Remove focus outline and add custom ring */
